@@ -1,0 +1,16 @@
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+  color: #222;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  transition: opacity 250ms linear;
+}
+
+.title:hover {
+  opacity: 0.8;
+}
