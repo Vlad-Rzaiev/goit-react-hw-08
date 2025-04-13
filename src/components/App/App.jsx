@@ -82,3 +82,7 @@ export default App;
 // username - Vlad
 // email - rzaev.vlad@gmail.com
 // password - cw87dw87gwc!(&)
+
+// username - Jesse
+// email - jesse.pinkman@gmail.com
+// password - nnbf8bf!@$%vu

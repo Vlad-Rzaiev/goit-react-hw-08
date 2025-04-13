@@ -12,19 +12,16 @@ export const RegisterForm = () => {
     password: '',
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    const form = e.target;
-
+  const handleSubmit = (values, actions) => {
     dispatch(
       register({
-        name: form.elements.name.value,
-        email: form.elements.email.value,
-        password: form.elements.password.value,
+        name: values.name.toLowerCase().trim(),
+        email: values.email.trim(),
+        password: values.password.trim(),
       })
     );
 
-    form.reset();
+    actions.resetForm();
   };
 
   return (

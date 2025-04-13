@@ -12,13 +12,10 @@ export const LoginForm = () => {
     password: '',
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    const form = e.currentTarget;
-
+  const handleSubmit = async (values, actions) => {
     const credentials = {
-      email: form.elements.email.value,
-      password: form.elements.password.value,
+      email: values.email.toLowerCase().trim(),
+      password: values.password.trim(),
     };
 
     try {
@@ -29,7 +26,7 @@ export const LoginForm = () => {
       toast.error('Login error');
     }
 
-    form.reset();
+    actions.resetForm();
   };
 
   return (
