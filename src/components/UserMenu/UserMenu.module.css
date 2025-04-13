@@ -1,0 +1,37 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  background-color: #03ddfad0;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.username {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333;
+  max-width: 100px;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.btn {
+  padding: 8px 16px;
+  background-color: #e53935;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 250ms linear, transform 250ms linear;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+}

@@ -1,51 +1,84 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, lazy } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts } from '../../redux/contactsOps';
-import {
-  selectContacts,
-  selectError,
-  selectLoading,
-} from '../../redux/contactsSlice';
+import { selectIsRefreshing } from '../../redux/auth/selectors';
+import { refreshUser } from '../../redux/auth/operations';
+import { Route, Routes } from 'react-router-dom';
 import Section from '../Section/Section';
 import Container from '../Container/Container';
-import ContactForm from '../ContactForm/ContactForm';
-import SearchBox from '../SearchBox/SearchBox';
-import ContactList from '../ContactList/ContactList';
 import Loader from '../Loader/Loader';
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import NoContacts from '../NoContacts/NoContacts';
-import styles from './App.module.css';
+import RestrictedRoute from '../RestrictedRoute';
+import { PrivateRoute } from '../PrivateRoute';
+import { Toaster } from 'react-hot-toast';
+import Layout from '../Layout/Layout';
+
+const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
+const RegisterPage = lazy(() =>
+  import('../../pages/RegisterPage/RegisterPage')
+);
+const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
+const ContactsPage = lazy(() =>
+  import('../../pages/ContactsPage/ContactsPage')
+);
 
 function App() {
-  const inputNameRef = useRef(null);
   const dispatch = useDispatch();
 
-  const contacts = useSelector(selectContacts);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
+  return isRefreshing ? (
+    <Loader />
+  ) : (
     <Section>
       <Container>
-        <h1 className={styles.title}>Phonebook</h1>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
 
-        <ContactForm inputNameRef={inputNameRef} />
+            <Route
+              path="/register"
+              element={
+                <RestrictedRoute
+                  component={<RegisterPage />}
+                  redirectTo="/contacts"
+                />
+              }
+            />
 
-        <SearchBox />
+            <Route
+              path="/login"
+              element={
+                <RestrictedRoute
+                  component={<LoginPage />}
+                  redirectTo="/contacts"
+                />
+              }
+            />
 
-        {loading && !error && <Loader />}
-        {error && <ErrorMessage message={error} />}
-        {contacts.length > 0 && <ContactList />}
-        {contacts.length === 0 && !loading && (
-          <NoContacts inputNameRef={inputNameRef} />
-        )}
+            <Route
+              path="/contacts"
+              element={
+                <PrivateRoute redirectTo="/" component={<ContactsPage />} />
+              }
+            />
+          </Routes>
+        </Layout>
+
+        <Toaster position="top-center" toastOptions={{ duration: 6000 }} />
       </Container>
     </Section>
   );
 }
 
 export default App;
+
+// username - Heisenberg
+// email - vlad.rzaev@gmail.com
+// password - bxwb8w&WGDWDjw097_)&
+
+// username - Vlad
+// email - rzaev.vlad@gmail.com
+// password - cw87dw87gwc!(&)
