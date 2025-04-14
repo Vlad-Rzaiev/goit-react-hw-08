@@ -1,6 +1,7 @@
 import { useId } from 'react';
 import { useDispatch } from 'react-redux';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import { addContact } from '../../redux/contacts/operations';
 import styles from './ContactForm.module.css';
@@ -25,29 +26,21 @@ export default function ContactForm({ inputNameRef }) {
     number: '',
   };
 
-  const hundleSubmit = (values, actions) => {
-    const currentDate = () => {
-      const date = new Date();
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      const hours = String(date.getHours()).padStart(2, '0');
-      const minutes = String(date.getMinutes()).padStart(2, '0');
-      const seconds = String(date.getSeconds()).padStart(2, '0');
-      const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
-
-      const formatedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
-
-      return formatedDate;
-    };
-
+  const hundleSubmit = async (values, actions) => {
     const newContact = {
-      createdAt: currentDate(),
       name: values.name.toLowerCase().trim(),
       number: values.number.trim(),
     };
 
-    dispatch(addContact(newContact));
+    try {
+      const data = await dispatch(addContact(newContact)).unwrap();
+      toast.success(`Contact ${data.name} has successfully been added.`);
+    } catch {
+      toast.error(
+        'Ooops. Something went wrong. Please reload the page and try again.'
+      );
+    }
+
     actions.resetForm();
   };
 

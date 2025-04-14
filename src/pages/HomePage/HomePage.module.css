@@ -7,14 +7,24 @@
   text-align: center;
 }
 
+.titleWrap {
+  margin-bottom: 24px;
+}
+
 .title {
   font-size: 42px;
   font-weight: 700;
   color: #363636;
-  margin-bottom: 20px;
+  margin-bottom: 4px;
 }
 
 .highlight {
+  color: #4dd0e1;
+}
+
+.name {
+  font-size: 42px;
+  font-weight: 900;
   color: #4dd0e1;
 }
 
