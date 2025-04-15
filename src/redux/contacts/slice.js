@@ -50,7 +50,12 @@ const slice = createSlice({
         state.items = [];
       })
       .addCase(editContact.pending, handlePending)
-      .addCase(editContact.fulfilled, (state, action) => {})
+      .addCase(editContact.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = state.items.map(contact =>
+          contact.id === action.payload.id ? action.payload : contact
+        );
+      })
       .addCase(editContact.rejected, handleRejected);
   },
 });

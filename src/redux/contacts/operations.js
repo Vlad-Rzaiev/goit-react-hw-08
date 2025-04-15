@@ -39,10 +39,10 @@ export const deleteContact = createAsyncThunk(
 
 export const editContact = createAsyncThunk(
   'contacts/editContact',
-  async (contactId, thunkAPI) => {
+  async ({ id, ...newData }, thunkAPI) => {
     try {
-      const resp = await axios.patch(`/contacts/${contactId}`);
-      console.log(resp);
+      const resp = await axios.patch(`/contacts/${id}`, newData);
+      return resp.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }

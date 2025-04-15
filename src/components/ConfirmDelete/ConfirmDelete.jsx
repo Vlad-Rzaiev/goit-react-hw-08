@@ -29,34 +29,32 @@ export default function ConfirmDelete({ isOpen, onConfirm, onClose, name }) {
       aria-describedby="confirm-delete-description"
     >
       <Box sx={modalStyle}>
-        <div className={css.modalWindow}>
-          <Typography
-            className={css.message}
-            id="confirm-delete-title"
-            variant="h6"
-            component="h2"
+        <Typography
+          className={css.message}
+          id="confirm-delete-title"
+          variant="h6"
+          component="h2"
+        >
+          Are you sure you want to delete your contact{' '}
+          <span className={css.messageName}>{name}</span>?
+        </Typography>
+        <div>
+          <button
+            className={css.yesBtn}
+            onClick={onConfirm}
+            variant="contained"
+            color="primary"
           >
-            Are you sure you want to delete your contact{' '}
-            <span className={css.messageName}>{name}</span>?
-          </Typography>
-          <div>
-            <button
-              className={css.yesBtn}
-              onClick={onConfirm}
-              variant="contained"
-              color="primary"
-            >
-              Yes
-            </button>
-            <button
-              className={css.noBtn}
-              onClick={onClose}
-              variant="outlined"
-              color="secondary"
-            >
-              No
-            </button>
-          </div>
+            Yes
+          </button>
+          <button
+            className={css.noBtn}
+            onClick={onClose}
+            variant="outlined"
+            color="secondary"
+          >
+            No
+          </button>
         </div>
       </Box>
     </Modal>

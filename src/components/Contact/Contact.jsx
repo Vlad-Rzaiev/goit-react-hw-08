@@ -6,10 +6,12 @@ import ConfirmDelete from '../ConfirmDelete/ConfirmDelete';
 import toast from 'react-hot-toast';
 import Button from '@mui/material/Button';
 import styles from './Contact.module.css';
+import EditForm from '../EditForm/EditForm';
 
 export default function Contact({ contact: { id, name, number } }) {
   const dispatch = useDispatch();
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenEditForm, setIsOpenEditForm] = useState(false);
 
   const handleDelete = async () => {
     try {
@@ -23,15 +25,6 @@ export default function Contact({ contact: { id, name, number } }) {
     }
   };
 
-  const handleEdit = async () => {
-    console.log(id);
-    try {
-    } catch {
-      toast.error(
-        'Ooops. Something went wrong. Please reload the page and try again.'
-      );
-    }
-  };
   return (
     <>
       <div>
@@ -46,7 +39,7 @@ export default function Contact({ contact: { id, name, number } }) {
       </div>
 
       <div>
-        <Button type="button" onClick={handleEdit}>
+        <Button type="button" onClick={() => setIsOpenEditForm(true)}>
           Edit
         </Button>
 
@@ -61,6 +54,16 @@ export default function Contact({ contact: { id, name, number } }) {
           onConfirm={handleDelete}
           onClose={() => setIsOpenModal(false)}
           name={name}
+        />
+      )}
+
+      {isOpenEditForm && (
+        <EditForm
+          isOpen={isOpenEditForm}
+          onClose={() => setIsOpenEditForm(false)}
+          name={name}
+          number={number}
+          id={id}
         />
       )}
     </>
